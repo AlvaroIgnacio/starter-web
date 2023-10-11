@@ -39,8 +39,42 @@ curl http://localhost:8080/hola
 Notar que la aplicación arranca en un tiempo drásticamente menor a la versión con jar ejecutable.
 Started StarterWebApplication in 0.032 seconds
 
+# Construyendo contenedores con Docker
 
-docker build -f Dockerfiles/Dockerfile.native --build-arg APP_FILE=benchmark-jibber -t jibber-benchmark:native.0.0.1-SNAPSHOT .
+## Contenedor para el Jar
+
+Podemos crear un contenedor Docker para el jar generado en primer término usando el comando
+docker build -f Dockerfile.jvm --build-arg APP_FILE=starter-web-0.0.1-SNAPSHOT.jar -t starter-web:jvm1 .
+
+Esto genera una imagen de aprox 186MB
+Se puede ejecutar con
+
+docker run --rm --name graal -p 8080:8080 starter-web:jvm1
+
+que arranca en 1.048 segundos aprox. 
+
+## Contenedor para el ejecutable (Linux)
+En Linux podemos crear un contenedor para el ejecutable creado en pasos previos con el comando:
+
+docker build -f Dockerfile.native --build-arg APP_FILE=starter-web -t starter-web:native1 .
+
+Se puede ejecutar con
+
+docker run --rm --name native -p 8080:8080 starter-web:native1
+
+
+## Contenedor para el ejecutable (Windows y Mac)
+
+Podemos crear un contenedor para el ejecutable creado en pasos previos con el comando:
+
+docker build -f Dockerfile --build-arg APP_FILE=starter-web -t starter-web:native2 .
+
+Esto genera una imagen de aprox 190MB, que se puede ejecutar con
+
+docker run --rm --name native2 -p 8080:8080 starter-web:native2
+
+que arranca en 0.023 segundos aprox., un tiempo mucho menor que el del contenedor para jar.
+ 
 
 ### Reference Documentation
 For further reference, please consider the following sections:
