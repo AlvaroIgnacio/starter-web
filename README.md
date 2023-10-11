@@ -14,6 +14,7 @@ java -jar target/starter-web-0.0.1-SNAPSHOT.jar
 Esto levanta un microservicio en el puerto 8080
 
 al cual se puede acceder con
+
 curl http://localhost:8080/hola
 
 La aplicación arranca en 
@@ -24,15 +25,21 @@ Started StarterWebApplication in 1.16 seconds (process running for 1.513)
 ## Usando Maven
 ./mvnw -Pnative spring-boot:build-image
 
-Esto genera una imagen en docker.io/library/starter-web:0.0.1-SNAPSHOT que se puede ejecutar con
+Esto genera una imagen en 
+docker.io/library/starter-web:0.0.1-SNAPSHOT 
+que se puede ejecutar con
 docker run --rm -p 8080:8080 docker.io/library/starter-web:0.0.1-SNAPSHOT
+
 Esto levanta un microservicio en el puerto 8080 al cual se puede acceder con
+
 curl http://localhost:8080/hola
 
 ## Usando Native Build Tools
 ./mvnw -Pnative native:compile
+
 Esto produce un ejecutable en la carpeta target que podemos ejecutar con
 target/starter-web
+
 Esto levanta un microservicio en el puerto 8080 al cual se puede acceder con
 curl http://localhost:8080/hola
 
@@ -44,6 +51,7 @@ Started StarterWebApplication in 0.032 seconds
 ## Contenedor para el Jar
 
 Podemos crear un contenedor Docker para el jar generado en primer término usando el comando
+
 docker build -f Dockerfile.jvm --build-arg APP_FILE=starter-web-0.0.1-SNAPSHOT.jar -t starter-web:jvm1 .
 
 Esto genera una imagen de aprox 186MB
@@ -58,9 +66,11 @@ En Linux podemos crear un contenedor para el ejecutable creado en pasos previos 
 
 docker build -f Dockerfile.native --build-arg APP_FILE=starter-web -t starter-web:native1 .
 
-Se puede ejecutar con
+Esto genera un contenedor de aprox. 80 MB, que se puede ejecutar con
 
 docker run --rm --name native -p 8080:8080 starter-web:native1
+
+Arranca en 0.03 segundos aprox., un tiempo mucho menor que el del contenedor para jar.
 
 
 ## Contenedor para el ejecutable (Windows y Mac)
